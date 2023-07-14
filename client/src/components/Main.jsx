@@ -1,4 +1,6 @@
+import { reducerCases } from "@/context/constants";
 import { useStateProvider } from "@/context/StateContext";
+import { CHECK_USER_ROUTE } from "@/utils/ApiRoutes";
 import { firebaseAuth } from "@/utils/FirebaseConfig";
 import { data } from "autoprefixer";
 import axios from "axios";
@@ -20,13 +22,25 @@ function Main() {
   onAuthStateChanged(firebaseAuth, async(currentUser) => {
     if(!currentUser) setRedirectLogin(true)
     if(!userInfo && currentUser?.email) {
+      const { data } = await axios.post(CHECK_USER_ROUTE, {email: currentUser.email})
+      if(!data.status){
+        router.push("/login")
+      }
+      if(data?.data){
 
-      const {data} = await axios.post(CHECK_USER_ROUTE, {email: currentUser.email})
+        const{id, name, email, profilePicture:profileImage, status} = data.data
+        dispatch({
+          type: reducerCases.SET_USER_INFO,
+          userInfo:{
+            id, 
+            name, 
+            email, 
+            profileImage, 
+            status
+          },
+        })
+      }
     }
-    if(!data.status){
-      router.push("/login")
-    }
-    dis
   })
   return <>
   <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
