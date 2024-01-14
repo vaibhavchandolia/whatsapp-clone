@@ -5,12 +5,12 @@ import { BsFilter } from "react-icons/bs";
 function SearchBar() {
   return (
   <div className="bg-search-input-container-background flex py-3 pl-5 items-center gap-3 h-14">
-    <div className="bg-panel-header-background flex item-center gap-5 px-3 py-1 rounded-lg flex-grow">
-      <div>
+    <div className="bg-panel-header-background flex item-center gap-5 px-3 py-1 rounded-lg flex-grow mx-4">
+      <div className="flex items-center">
         <BiSearchAlt2  className="text-panel-header-icon cursor-pointer text-l" />
       </div>
       <div>
-        <input type="text" placeholder="Seach or start a new chat" 
+        <input type="text" placeholder="Search Contacts" 
         className="bg-transparent text-sm focus:outline-none text-white w-full" 
         /> 
       </div>
