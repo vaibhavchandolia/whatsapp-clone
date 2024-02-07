@@ -3,7 +3,7 @@ import getPrismaInstance from "../utils/PrismaClient.js"
 export const addMessage = async (req, res, next) => {
     try{
         const prisma = getPrismaInstance()
-        const { message, from, to } = req.body
+        const { message, from, to } = req.body 
         const getUser = onlineUsers.get(to)
         if(message && from && to){
             const newMessage = await prisma.messages.create({

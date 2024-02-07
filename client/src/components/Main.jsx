@@ -45,17 +45,17 @@ function Main() {
   })
 
 
-  useEffect(() => {
-    const getMessages = async () => {
-      const{ data } = await axios.get(
-        `${GET_MESSAGES_ROUTE}/${userInfo.id}/${currentChatUser.id}`
-      )
-      console.log({ data })
-    }
-    if(currentChatUser?.id) {
-      getMessages()
-    }
-  }, [currentChatUser])
+  // useEffect(() => {
+  //   const getMessages = async () => {
+  //     const{ data } = await axios.get(
+  //       `${GET_MESSAGES_ROUTE}/${userInfo.id}/${currentChatUser.id}`
+  //     )
+  //     console.log({ data })
+  //   }
+  //   if(currentChatUser?.id) {
+  //     getMessages()
+  //   }
+  // }, [currentChatUser])
 
   return <>
   <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">

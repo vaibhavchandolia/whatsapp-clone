@@ -14,8 +14,8 @@ function MessageBar() {
   const sendMessage = async () => {
     try{
      const { data } = await axios.post(ADD_MESSAGE_ROUTE, {
-      to: currentChatUser?.id,
-      from: userInfo?.id,
+      to:currentChatUser?.id,
+      from:userInfo?.id,
       message,
      })
      setMessage("")
@@ -58,7 +58,6 @@ function MessageBar() {
           </button>
         </div>
       </>
-
     </div>
   )
 }
