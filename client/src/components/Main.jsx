@@ -12,59 +12,65 @@ import ChatList from "./Chatlist/ChatList";
 import Empty from "./Empty";
 
 function Main() {
-  const router = useRouter()
-  const [{userInfo, currentChatUser}, dispatch] = useStateProvider('/login')
-  const [redirectLogin, setRedirectLogin] = useState(false)
+  const router = useRouter();
+  const [{ userInfo, currentChatUser }, dispatch] = useStateProvider("/login");
+  const [redirectLogin, setRedirectLogin] = useState(false);
 
   useEffect(() => {
-    if(redirectLogin) router.push("/login")
-  }, [redirectLogin])
+    if (redirectLogin) router.push("/login");
+  }, [redirectLogin]);
 
-  onAuthStateChanged(firebaseAuth, async(currentUser) => {
-    if(!currentUser) setRedirectLogin(true)
-    if(!userInfo && currentUser?.email) {
-      const { data } = await axios.post(CHECK_USER_ROUTE, {email: currentUser.email})
-      if(!data.status){
-        router.push("/login")
+  onAuthStateChanged(firebaseAuth, async (currentUser) => {
+    if (!currentUser) setRedirectLogin(true);
+    if (!userInfo && currentUser?.email) {
+      const { data } = await axios.post(CHECK_USER_ROUTE, {
+        email: currentUser.email,
+      });
+      if (!data.status) {
+        router.push("/login");
       }
-      if(data?.data){
-
-        const{id, name, email, profilePicture:profileImage, status} = data.data
+      if (data?.data) {
+        const {
+          id,
+          name,
+          email,
+          profilePicture: profileImage,
+          status,
+        } = data.data;
         dispatch({
           type: reducerCases.SET_USER_INFO,
-          userInfo:{
-            id, 
-            name, 
-            email, 
-            profileImage, 
-            status
+          userInfo: {
+            id,
+            name,
+            email,
+            profileImage,
+            status,
           },
-        })
+        });
       }
     }
-  })
+  });
 
-
-  // useEffect(() => {
-  //   const getMessages = async () => {
-  //     const{ data } = await axios.get(
-  //       `${GET_MESSAGES_ROUTE}/${userInfo.id}/${currentChatUser.id}`
-  //     )
-  //     console.log({ data })
-  //   }
-  //   if(currentChatUser?.id) {
-  //     getMessages()
-  //   }
-  // }, [currentChatUser])
-
-  return <>
-  <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
-    <ChatList />
-    {
-      currentChatUser? <Chat/> : <Empty />
+  useEffect(() => {
+    const getMessages = async () => {
+      const { data } = await axios.get(
+        `${GET_MESSAGES_ROUTE}/${userInfo.id}/${currentChatUser.id}`,
+      );
+      console.log({ data });
+    };
+    if (currentChatUser?.id) {
+      getMessages();
     }
-  </div>
-  </>;
+  }, [currentChatUser]);
+
+  return (
+    <>
+      <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
+        <ChatList />
+        {currentChatUser ? <Chat /> : <Empty />}
+      </div>
+    </>
+  );
 }
 
 export default Main;
