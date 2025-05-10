@@ -26,7 +26,7 @@ function PhotoLibrary({setImage, hidePhotoLibrary}) {
       </div>
       <div className="grid grid-cols-3 justify-center items-center gap-16 p-20 w-full">
         {images.map((image, idx) => 
-          <div onClick={() => 
+          <div key={idx} onClick={() => 
             {setImage(images[idx]); hidePhotoLibrary(false)}}>
               <div className="h-24 w-24 cursor-pointer relative">
                 <Image src={image} alt="avatar" fill/>

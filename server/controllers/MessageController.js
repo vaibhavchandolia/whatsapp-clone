@@ -47,10 +47,8 @@ export const getMessages = async (req, res, next) => {
     });
 
     const unreadMessages = [];
-    console.log(unreadMessages);
 
     messages.forEach((message, index) => {
-      console.log("in the loop", message, index);
       if (
         message.messageStatus !== "read" &&
         message.senderId === parseInt(to)
